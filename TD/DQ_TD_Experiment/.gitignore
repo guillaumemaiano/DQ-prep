@@ -1,0 +1,30 @@
+# General
+*.swp
+*.swo
+*.rbo
+*.gem
+.DS_Store
+.rbenv-version
+.rbx/
+xcuserdata
+project.xcworkspace
+DerivedData
+/concatenated.*
+
+# IDEs
+*.xccheckout
+
+# RVM files
+/.rvmrc
+/.ruby-version
+/.ruby-gemset
+
+# Bundler files
+/.bundle
+
+# Pods
+**/Podfile.lock
+Pods
+**/Pods
+coverage/
+.coveralls.yml

@@ -1,0 +1,20 @@
+# Uncomment the next line to define a global platform for your project
+ platform :ios, '14.0'
+
+target 'DQ_Basic_Experiment' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+	
+  # Pods for DQ_Basic_Experiment
+  pod 'DriveKitCommonUI'
+
+  target 'DQ_Basic_ExperimentTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+  target 'DQ_Basic_ExperimentUITests' do
+    # Pods for testing
+  end
+
+end
