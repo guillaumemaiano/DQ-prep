@@ -8,7 +8,7 @@
 import Foundation
 import CoreLocation
 
-struct BeaconCandidates {
+struct BeaconCandidate {
     let major: CLBeaconMajorValue
     let minor: CLBeaconMinorValue
     let name: String

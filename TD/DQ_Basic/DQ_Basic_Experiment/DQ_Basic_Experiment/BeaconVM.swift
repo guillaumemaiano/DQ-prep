@@ -23,6 +23,8 @@ class BeaconVM: NSObject & CBCentralManagerDelegate & CLLocationManagerDelegate 
     var cm: CBCentralManager?
     
     var cLLM = CLLocationManager()
+    
+    var beacons: [BeaconCandidate] = []
 
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         switch central.state {
@@ -85,14 +87,21 @@ class BeaconVM: NSObject & CBCentralManagerDelegate & CLLocationManagerDelegate 
     }
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
         // warn user we got in range of the beacon
+        let content = UNMutableNotificationContent()
+        content.title = "Entered area"
+        content.body = "We have made contact with our point of reference."
+        content.sound = .default
+        
+        let request = UNNotificationRequest(identifier: "AreaEntry", content: content, trigger: nil)
+        UNUserNotificationCenter.current().add(request, withCompletionHandler: {_ in print("Area Entry Notified")})
     }
     
-    func monitorBeacon(_ candidate: BeaconCandidates) {
+    func monitorBeacon(_ candidate: BeaconCandidate) {
         let region = candidate.beaconRegion()
         cLLM.startMonitoring(for: region)
         cLLM.startRangingBeacons(satisfying: CLBeaconIdentityConstraint(uuid: region.uuid))
     }
-    func stopMonitoringBeacon(_ candidate: BeaconCandidates) {
+    func stopMonitoringBeacon(_ candidate: BeaconCandidate) {
         let region = candidate.beaconRegion()
         cLLM.stopRangingBeacons(satisfying: CLBeaconIdentityConstraint(uuid: region.uuid))
         cLLM.stopMonitoring(for: region)
@@ -113,5 +122,9 @@ class BeaconVM: NSObject & CBCentralManagerDelegate & CLLocationManagerDelegate 
             cLLM.requestAlwaysAuthorization()
         }
         cLLM.delegate = self
+        if let beaconUUID = UUID(uuidString: "11-46-FE-00-00-84-DF-C8") {
+            print("Beacon defined")
+            beacons.append(BeaconCandidate(major: 1, minor: 1, name: "BLUNO", uuid: beaconUUID))
+        }
     }
 }
